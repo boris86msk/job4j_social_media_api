@@ -21,4 +21,7 @@ public class Post {
     private String filePath;
 
     private LocalDateTime created;
+
+    @Column(name = "user_id")
+    private int userId;
 }
