@@ -9,5 +9,5 @@ import java.util.List;
 public interface PostRepository extends CrudRepository<Post, Long> {
     List<Post> findAllByUserId(int id);
     List<Post> findAllByCreatedGreaterThanEqualAndCreatedLessThanEqual(LocalDateTime from, LocalDateTime before);
-    List<Post> findAllByOOrderByCreatedDesc();
+    List<Post> findAllByOrderByCreatedDesc();
 }
