@@ -23,5 +23,5 @@ public class Post {
     private LocalDateTime created;
 
     @Column(name = "user_id")
-    private int userId;
+    private Long userId;
 }
