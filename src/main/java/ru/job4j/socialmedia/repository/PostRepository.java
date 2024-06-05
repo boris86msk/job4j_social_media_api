@@ -22,7 +22,7 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     void deletePostPicture(@Param("id") Long id);
 
     @Modifying(clearAutomatically = true)
-    @Query("delete Post p where p.id = :id")
+    @Query("delete from Post p where p.id = :id")
     void deletePostById(@Param("id") Long id);
 
     @Query(value = "select p from posts p "
