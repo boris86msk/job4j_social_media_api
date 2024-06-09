@@ -15,7 +15,7 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     List<Post> findAllByOrderByCreatedDesc();
     @Modifying(clearAutomatically = true)
     @Query("update Post p set p.title = :title, p.text = :text where p.id = :id")
-    void updateTitleAndText(@Param("title") String title, @Param("text") String text, @Param("id ") Long id);
+    void updateTitleAndText(@Param("title") String title, @Param("text") String text, @Param("id") Long id);
 
     @Modifying(clearAutomatically = true)
     @Query("update Post p set p.filePath = null where p.id = :id")
