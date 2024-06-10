@@ -7,7 +7,7 @@ import ru.job4j.socialmedia.repository.SubscribeRepository;
 
 @Service
 @RequiredArgsConstructor
-public class MinSubscribeService implements SubscribeService {
+public class MainSubscribeService implements SubscribeService {
 
     private final SubscribeRepository subscribeRepository;
 

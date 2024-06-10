@@ -4,11 +4,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import ru.job4j.socialmedia.model.Post;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Repository
 public interface PostRepository extends CrudRepository<Post, Long> {
     List<Post> findAllByUserId(int id);
     List<Post> findAllByCreatedGreaterThanEqualAndCreatedLessThanEqual(LocalDateTime from, LocalDateTime before);
@@ -20,10 +22,6 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     @Modifying(clearAutomatically = true)
     @Query("update Post p set p.filePath = null where p.id = :id")
     void deletePostPicture(@Param("id") Long id);
-
-    @Modifying(clearAutomatically = true)
-    @Query("delete from Post p where p.id = :id")
-    void deletePostById(@Param("id") Long id);
 
     @Query(value = "select p from posts p "
             + "join users u on u.id = p.user_id "
