@@ -15,5 +15,5 @@ public class Subscribers {
     private int userId;
 
     @Column(name = "subscribe_id")
-    private int subscribe_id;
+    private int subscribeId;
 }
