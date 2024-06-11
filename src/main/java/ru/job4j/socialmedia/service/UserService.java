@@ -9,5 +9,6 @@ public interface UserService {
     User saveUser(User user);
     Optional<User> getUserById(int userId);
     List<User> getAllUsers();
-    void deleteUserById(int userId);
+    boolean deleteUserById(int userId);
+    boolean updateUser(User user);
 }

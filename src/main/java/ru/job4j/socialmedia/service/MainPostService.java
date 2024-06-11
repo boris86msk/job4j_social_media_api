@@ -23,12 +23,16 @@ public class MainPostService implements PostService {
     }
 
     @Override
-    public Post updatePost(Post post) {
-        return postRepository.save(post);
+    public boolean updatePost(Post post) {
+        Post savePost = postRepository.save(post);
+        return savePost != null;
     }
 
     @Override
-    public void deletePostById(int id) {
-        postRepository.deleteById(Integer.toUnsignedLong(id));
+    public boolean deletePostById(int id) {
+        Long postId = Integer.toUnsignedLong(id);
+        postRepository.deleteById(postId);
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        return optionalPost.isPresent();
     }
 }

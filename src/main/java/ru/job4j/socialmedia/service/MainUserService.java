@@ -33,7 +33,15 @@ public class MainUserService implements UserService {
     }
 
     @Override
-    public void deleteUserById(int userId) {
-        userRepository.deleteById(Integer.toUnsignedLong(userId));
+    public boolean deleteUserById(int userId) {
+        Long id = Integer.toUnsignedLong(userId);
+        userRepository.deleteById(id);
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.isPresent();
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        return userRepository.save(user) != null;
     }
 }
