@@ -40,7 +40,7 @@ public class PostController {
 
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody Post post) {
-        if (postService.updatePost(post)){
+        if (postService.updatePost(post)) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
