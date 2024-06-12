@@ -2,15 +2,20 @@ package ru.job4j.socialmedia.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.job4j.socialmedia.dto.PostsByUserDto;
 import ru.job4j.socialmedia.model.Post;
 import ru.job4j.socialmedia.repository.PostRepository;
+import ru.job4j.socialmedia.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MainPostService implements PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Post createPost(Post newPost) {
@@ -34,5 +39,21 @@ public class MainPostService implements PostService {
         postRepository.deleteById(postId);
         Optional<Post> optionalPost = postRepository.findById(postId);
         return optionalPost.isPresent();
+    }
+
+    @Override
+    @Transactional
+    public List<PostsByUserDto> getListPostByUserid(List<Integer> userId) {
+        List<PostsByUserDto> postsByUser = userId.stream()
+                .map(id -> {
+                    Long longId = Integer.toUnsignedLong(id);
+                    PostsByUserDto dto = new PostsByUserDto();
+                    dto.setUserId(longId);
+                    dto.setUserName(userRepository.findById(longId).get().getLogin());
+                    dto.setPostList(postRepository.findAllByUserId(id));
+                    return dto;
+                })
+                .toList();
+        return postsByUser;
     }
 }

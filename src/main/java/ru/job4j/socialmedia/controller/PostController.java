@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.job4j.socialmedia.dto.PostsByUserDto;
 import ru.job4j.socialmedia.model.Post;
 import ru.job4j.socialmedia.service.PostService;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -35,7 +37,7 @@ public class PostController {
     public ResponseEntity<Post> getPostById(@PathVariable int postId) {
         Optional<Post> postById = postService.getPostById(postId);
         return postById.map(ResponseEntity::ok)
-                       .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping
@@ -52,5 +54,14 @@ public class PostController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/byUsersId")
+    public ResponseEntity<List<PostsByUserDto>> listPostsByUser(@RequestBody List<Integer> listUserId) {
+        List<PostsByUserDto> listPostByUserid = postService.getListPostByUserid(listUserId);
+        if (listPostByUserid.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(listPostByUserid);
     }
 }
