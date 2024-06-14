@@ -1,9 +1,12 @@
 package ru.job4j.socialmedia.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.job4j.socialmedia.model.User;
@@ -13,6 +16,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@Validated
 @RestController
 @RequestMapping("/api/user")
 @AllArgsConstructor
@@ -34,7 +38,9 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable int userId) {
+    public ResponseEntity<User> getUserById(@PathVariable @NotNull
+                                                @Min(value = 1, message = "id пользователя должен быть 1 и более")
+                                                int userId) {
         Optional<User> userById = userService.getUserById(userId);
         return userById
                 .map(ResponseEntity::ok)
@@ -56,7 +62,9 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> removeById(@PathVariable int userId) {
+    public ResponseEntity<Void> removeById(@PathVariable @NotNull
+                                               @Min(value = 1, message = "id пользователя должен быть 1 и более")
+                                               int userId) {
         if (userService.deleteUserById(userId)) {
             return ResponseEntity.noContent().build();
         }

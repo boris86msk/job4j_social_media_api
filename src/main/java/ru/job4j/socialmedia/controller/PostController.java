@@ -1,8 +1,12 @@
 package ru.job4j.socialmedia.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.job4j.socialmedia.dto.PostsByUserDto;
@@ -13,6 +17,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@Validated
 @RestController
 @RequestMapping("/api/post")
 @AllArgsConstructor
@@ -21,7 +26,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<Post> save(@RequestBody Post post) {
+    public ResponseEntity<Post> save(@Valid @RequestBody Post post) {
         postService.createPost(post);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -34,7 +39,9 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<Post> getPostById(@PathVariable int postId) {
+    public ResponseEntity<Post> getPostById(@PathVariable @NotNull
+                                                @Min(value = 1, message = "id поста должен быть 1 и более")
+                                                int postId) {
         Optional<Post> postById = postService.getPostById(postId);
         return postById.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -49,7 +56,9 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> removeById(@PathVariable int postId) {
+    public ResponseEntity<Void> removeById(@PathVariable @NotNull
+                                               @Min(value = 1, message = "id поста должен быть 1 и более")
+                                               int postId) {
         if (postService.deletePostById(postId)) {
             return ResponseEntity.noContent().build();
         }
