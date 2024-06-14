@@ -44,7 +44,7 @@ public class MainPostService implements PostService {
     @Override
     @Transactional
     public List<PostsByUserDto> getListPostByUserid(List<Integer> userId) {
-        List<PostsByUserDto> postsByUser = userId.stream()
+        return userId.stream()
                 .map(id -> {
                     Long longId = Integer.toUnsignedLong(id);
                     PostsByUserDto dto = new PostsByUserDto();
@@ -54,6 +54,5 @@ public class MainPostService implements PostService {
                     return dto;
                 })
                 .toList();
-        return postsByUser;
     }
 }

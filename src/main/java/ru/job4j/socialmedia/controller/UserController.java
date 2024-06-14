@@ -1,5 +1,6 @@
 package ru.job4j.socialmedia.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user) {
+    public ResponseEntity<User> save(@Valid @RequestBody User user) {
         userService.saveUser(user);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
