@@ -1,4 +1,4 @@
-package ru.job4j.socialmedia.controller.validation;
+package ru.job4j.socialmedia.validation;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

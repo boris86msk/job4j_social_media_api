@@ -1,5 +1,6 @@
 package ru.job4j.socialmedia.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "PostController", description = "PostController management APIs")
 @Validated
 @RestController
 @RequestMapping("/api/post")

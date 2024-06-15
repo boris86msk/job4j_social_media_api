@@ -12,8 +12,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.job4j.socialmedia.controller.validation.ValidationErrorResponse;
-import ru.job4j.socialmedia.controller.validation.Violation;
+import ru.job4j.socialmedia.validation.ValidationErrorResponse;
+import ru.job4j.socialmedia.validation.Violation;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
