@@ -33,8 +33,8 @@ public class UserController {
 
     @Operation(
             summary = "Saving a new user",
-            description = "Save the new user of the system by transferring his credentials." +
-                    " The response will be a new user object with an assigned id")
+            description = "Save the new user of the system by transferring his credentials."
+                    + " The response will be a new user object with an assigned id")
     @PostMapping
     public ResponseEntity<User> save(@Valid @RequestBody User user) {
         userService.saveUser(user);
@@ -50,8 +50,8 @@ public class UserController {
 
     @Operation(
             summary = "Retrieve a User by userId",
-            description = "Get a User object by specifying its userId. The response is User object with userId," +
-                    " username and date of created.",
+            description = "Get a User object by specifying its userId. The response is User object with userId,"
+                    + " username and date of created.",
             tags = { "User", "get" })
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = User.class),
