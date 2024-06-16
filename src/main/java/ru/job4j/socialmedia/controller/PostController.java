@@ -1,5 +1,6 @@
 package ru.job4j.socialmedia.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -27,6 +28,9 @@ public class PostController {
 
     private final PostService postService;
 
+    @Operation(
+            summary = "Saving a new post",
+            description = "Saving a new post. The response returns a post object with the assigned id")
     @PostMapping
     public ResponseEntity<Post> save(@Valid @RequestBody Post post) {
         postService.createPost(post);
@@ -49,6 +53,7 @@ public class PostController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Update post data")
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody Post post) {
         if (postService.updatePost(post)) {

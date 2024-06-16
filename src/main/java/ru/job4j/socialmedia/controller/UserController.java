@@ -1,5 +1,10 @@
 package ru.job4j.socialmedia.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -26,6 +31,10 @@ public class UserController {
 
     private final UserService userService;
 
+    @Operation(
+            summary = "Saving a new user",
+            description = "Save the new user of the system by transferring his credentials." +
+                    " The response will be a new user object with an assigned id")
     @PostMapping
     public ResponseEntity<User> save(@Valid @RequestBody User user) {
         userService.saveUser(user);
@@ -39,6 +48,15 @@ public class UserController {
                 .body(user);
     }
 
+    @Operation(
+            summary = "Retrieve a User by userId",
+            description = "Get a User object by specifying its userId. The response is User object with userId," +
+                    " username and date of created.",
+            tags = { "User", "get" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = User.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable @NotNull
                                                 @Min(value = 1, message = "id пользователя должен быть 1 и более")
@@ -54,6 +72,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @Operation(summary = "Update user data")
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody User user) {
         if (userService.updateUser(user)) {
