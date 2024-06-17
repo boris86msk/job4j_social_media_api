@@ -7,7 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -48,4 +50,9 @@ public class User {
     )
     @Schema(description = "user subscriptions")
     private List<User> subscribers;
+
+    @ManyToMany
+    @JoinTable(name = "persons_roles", joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 }
