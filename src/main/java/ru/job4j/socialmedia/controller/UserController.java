@@ -76,6 +76,7 @@ public class UserController {
 
     @Operation(summary = "Update user data")
     @PutMapping
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<Void> update(@RequestBody User user) {
         if (userService.updateUser(user)) {
             return ResponseEntity.ok().build();
@@ -85,7 +86,7 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasRole('MODERATOR')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> removeById(@PathVariable @NotNull
                                                @Min(value = 1, message = "id пользователя должен быть 1 и более")
                                                int userId) {
