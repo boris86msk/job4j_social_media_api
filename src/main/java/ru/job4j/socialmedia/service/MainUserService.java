@@ -57,7 +57,7 @@ public class MainUserService implements UserService {
     public RegisterDTO signUp(SignupRequestDTO signUpRequest) {
         if (Boolean.TRUE.equals(userRepository.existsByLogin(signUpRequest.getLogin()))
                 || Boolean.TRUE.equals(userRepository.existsByEmail(signUpRequest.getEmail()))) {
-            return new RegisterDTO(HttpStatus.BAD_REQUEST, "Error: Username or Email is already taken!" );
+            return new RegisterDTO(HttpStatus.BAD_REQUEST, "Error: Username or Email is already taken!");
         }
 
         User newUser = new User(signUpRequest.getLogin(), signUpRequest.getEmail(),
@@ -80,6 +80,6 @@ public class MainUserService implements UserService {
         }
         newUser.setRoles(roles);
         userRepository.save(newUser);
-        return new RegisterDTO(HttpStatus.OK, "Person registered successfully!" );
+        return new RegisterDTO(HttpStatus.OK, "Person registered successfully!");
     }
 }
