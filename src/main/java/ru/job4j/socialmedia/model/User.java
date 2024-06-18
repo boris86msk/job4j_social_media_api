@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.HashSet;
@@ -14,8 +16,16 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "users")
+@NoArgsConstructor
 @Schema(description = "User Model Information")
 public class User {
+
+    public User(String login, String email, String password) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
