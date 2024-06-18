@@ -53,13 +53,14 @@ public class MainUserService implements UserService {
         return userRepository.save(user) != null;
     }
 
+    @Override
     public RegisterDTO signUp(SignupRequestDTO signUpRequest) {
-        if (Boolean.TRUE.equals(userRepository.existsByUsername(signUpRequest.getUsername()))
+        if (Boolean.TRUE.equals(userRepository.existsByLogin(signUpRequest.getLogin()))
                 || Boolean.TRUE.equals(userRepository.existsByEmail(signUpRequest.getEmail()))) {
             return new RegisterDTO(HttpStatus.BAD_REQUEST, "Error: Username or Email is already taken!" );
         }
 
-        User newUser = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
+        User newUser = new User(signUpRequest.getLogin(), signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRole();

@@ -31,9 +31,9 @@ public class User {
     private Long id;
 
     @NotBlank(message = "login не может быть пустым")
-    @Length(min = 6,
+    @Length(min = 4,
             max = 10,
-            message = "login должен быть не менее 6 и не более 10 символов")
+            message = "login должен быть не менее 4 и не более 10 символов")
     @Schema(description = "User's login", example = "Pavel45")
     private String login;
 
@@ -42,9 +42,6 @@ public class User {
     private String email;
 
     @NotBlank(message = "password не может быть пустым")
-    @Length(min = 4,
-            max = 10,
-            message = "password должен быть не менее 4 и не более 10 символов")
     private String password;
 
     @OneToMany()
@@ -62,7 +59,7 @@ public class User {
     private List<User> subscribers;
 
     @ManyToMany
-    @JoinTable(name = "persons_roles", joinColumns = @JoinColumn(name = "person_id"),
+    @JoinTable(name = "persons_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 }

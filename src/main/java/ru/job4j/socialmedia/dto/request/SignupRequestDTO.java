@@ -2,10 +2,10 @@ package ru.job4j.socialmedia.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
 
@@ -14,17 +14,20 @@ import java.util.Set;
 @NoArgsConstructor
 public class SignupRequestDTO {
     @NotBlank
-    @Size(min = 3, max = 20)
-    private String username;
+    @Length(min = 4,
+            max = 10,
+            message = "login должен быть не менее 6 и не более 10 символов")
+    private String login;
 
     @NotBlank
-    @Size(max = 50)
     @Email
     private String email;
 
     private Set<String> role;
 
     @NotBlank
-    @Size(min = 6, max = 40)
+    @Length(min = 6,
+            max = 10,
+            message = "password должен быть не менее 6 и не более 10 символов")
     private String password;
 }

@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,6 +28,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/user")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     private final UserService userService;
@@ -83,6 +85,7 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<Void> removeById(@PathVariable @NotNull
                                                @Min(value = 1, message = "id пользователя должен быть 1 и более")
                                                int userId) {

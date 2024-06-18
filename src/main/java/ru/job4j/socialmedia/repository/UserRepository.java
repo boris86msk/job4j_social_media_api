@@ -1,14 +1,16 @@
 package ru.job4j.socialmedia.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import ru.job4j.socialmedia.model.User;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends CrudRepository<User, Long> {
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.login = :login and u.password = :password")
     User findByLoginAndPassword(@Param("login") String login, @Param("password") String password);
 
@@ -20,9 +22,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
             + " where s.user_id = :userId and s.is_mutual = true", nativeQuery = true)
     List<User> findAllFriends(@Param("userId") Long id);
 
-    Optional<User> findByUsername(String username);
+    Optional<User> findByLogin(String username);
 
-    Boolean existsByUsername(String username);
+    Boolean existsByLogin(String username);
 
     Boolean existsByEmail(String email);
 }
