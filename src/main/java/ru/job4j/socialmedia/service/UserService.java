@@ -1,5 +1,7 @@
 package ru.job4j.socialmedia.service;
 
+import ru.job4j.socialmedia.dto.request.SignupRequestDTO;
+import ru.job4j.socialmedia.dto.response.RegisterDTO;
 import ru.job4j.socialmedia.model.User;
 
 import java.util.List;
@@ -11,4 +13,5 @@ public interface UserService {
     List<User> getAllUsers();
     boolean deleteUserById(int userId);
     boolean updateUser(User user);
+    RegisterDTO signUp(SignupRequestDTO signUpRequest);
 }

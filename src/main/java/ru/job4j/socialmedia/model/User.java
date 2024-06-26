@@ -5,23 +5,35 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "users")
+@NoArgsConstructor
 @Schema(description = "User Model Information")
 public class User {
+
+    public User(String login, String email, String password) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "login не может быть пустым")
-    @Length(min = 6,
+    @Length(min = 4,
             max = 10,
-            message = "login должен быть не менее 6 и не более 10 символов")
+            message = "login должен быть не менее 4 и не более 10 символов")
     @Schema(description = "User's login", example = "Pavel45")
     private String login;
 
@@ -30,9 +42,6 @@ public class User {
     private String email;
 
     @NotBlank(message = "password не может быть пустым")
-    @Length(min = 4,
-            max = 10,
-            message = "password должен быть не менее 4 и не более 10 символов")
     private String password;
 
     @OneToMany()
@@ -48,4 +57,9 @@ public class User {
     )
     @Schema(description = "user subscriptions")
     private List<User> subscribers;
+
+    @ManyToMany
+    @JoinTable(name = "persons_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 }
